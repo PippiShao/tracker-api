@@ -2,7 +2,7 @@ require("dotenv").config();
 
 const { MongoClient } = require("mongodb");
 
-const url = process.env.DB_URL || "mongodb://localhost/issuetracker";
+const url = process.env.MONGODB_URI || "mongodb://localhost/issuetracker";
 
 function testWithCallbacks(callback) {
   console.log("\n--- testWithCallbacks ---");
@@ -16,7 +16,8 @@ function testWithCallbacks(callback) {
 
     const db = client.db();
     const collection = db.collection("employees");
-    const employee = { id: 1.0, name: "A. Callback", age: 23 };
+
+    const employee = { id: 1, name: "A. Callback", age: 23 };
     collection.insertOne(employee, (insertErr, result) => {
       if (insertErr) {
         client.close();
