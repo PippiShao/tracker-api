@@ -60,11 +60,14 @@ routes.post("/signin", async (req, res) => {
     httpOnly: true,
     domain: process.env.COOKIE_DOMAIN,
   });
+
   res.json(credentials);
 });
 
 routes.post("/signout", async (req, res) => {
-  res.clearCookie("jwt");
+  res.clearCookie("jwt", {
+    domain: process.env.COOKIE_DOMAIN,
+  });
   res.json({ status: "ok" });
 });
 
@@ -84,4 +87,10 @@ function mustBeSignedIn(resolver) {
 function resolveUser(_, args, { user }) {
   return user;
 }
-module.exports = { routes, getUser, mustBeSignedIn, resolveUser };
+
+module.exports = {
+  routes,
+  getUser,
+  mustBeSignedIn,
+  resolveUser,
+};
